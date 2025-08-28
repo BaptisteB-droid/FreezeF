@@ -5,12 +5,13 @@ using TMPro;
 public class Timer : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI timerText;
+    [SerializeField] private FreezeFrame freezeFrame;
     public float levelTime;
     public bool levelFinished = false;
 
     void Update()
     {
-        if (!levelFinished)
+        if (!levelFinished && !freezeFrame.isFreeze)
         {
         levelTime += Time.deltaTime;
 

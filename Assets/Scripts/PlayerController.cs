@@ -5,6 +5,7 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private Rigidbody rigidbody;
     [SerializeField] private PlayerInput playerInput;
+    [SerializeField] private FreezeFrame freezeFrame;
 
     private Vector2 moveInput;
     private bool facingForward = true;
@@ -61,17 +62,25 @@ public class PlayerController : MonoBehaviour
 
     public void OnMove(InputValue value)
     {
-        moveInput = value.Get<Vector2>();
-        Flip();
+        if (!freezeFrame.isFreeze)
+        {
+            moveInput = value.Get<Vector2>();
+            Flip();
+        }
+
     }
 
     public void OnJump(InputValue value)
     {
-        if(value.isPressed && isGrounded)
+        if(value.isPressed && isGrounded && !freezeFrame.isFreeze)
         {
         rigidbody.linearVelocity = new Vector3(rigidbody.linearVelocity.x, jumpForce);
         }
     }
 
+    public void OnFreeze(InputValue value)
+    {
+        freezeFrame.Freeze();
+    }
 
 }
