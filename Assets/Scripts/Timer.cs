@@ -8,6 +8,7 @@ public class Timer : MonoBehaviour
     [SerializeField] private FreezeFrame freezeFrame;
     public float levelTime;
     public bool levelFinished = false;
+    public float freezeTime = 1f;
 
     void Update()
     {
@@ -19,6 +20,15 @@ public class Timer : MonoBehaviour
         int seconds = Mathf.FloorToInt(levelTime % 60);
 
         timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+        }
+        else if(!levelFinished && freezeFrame.isFreeze)
+        {
+            levelTime += Time.deltaTime * freezeTime;
+
+            int minutes = Mathf.FloorToInt(levelTime / 60);
+            int seconds = Mathf.FloorToInt(levelTime % 60);
+
+            timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
         }
     }
 }

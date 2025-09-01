@@ -159,7 +159,7 @@ GameObject:
   - component: {fileID: 5244243907968951685}
   m_Layer: 8
   m_Name: GhostPlayer
-  m_TagString: Player
+  m_TagString: Ghost
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -312,6 +312,7 @@ MonoBehaviour:
     m_Bits: 64
   gravityScale: 2.5
   gravityForce: 9.81
+  positions: []
 --- !u!114 &5244243907968951685
 MonoBehaviour:
   m_ObjectHideFlags: 0

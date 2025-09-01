@@ -66,18 +66,20 @@ public class PlayerController : MonoBehaviour
         else if(ghost.positions.Count == 0)
         {
             isRewinding = false;
+            rigidbody.linearVelocity = new Vector3(0, 0, 0);
+            transform.position = ghost.transform.position;
         }
     }
 
 
     void Flip()
     {
-        if (moveInput.x > 0.1f)
+        if (moveInput.x > 0.1f && !freezeFrame.isFreeze && !isRewinding && !isRecording)
         {
             facingForward = true;
             transform.rotation = Quaternion.Euler(0, 0, 0);
         }
-        else if (moveInput.x < -0.1f)
+        else if (moveInput.x < -0.1f && !freezeFrame.isFreeze && !isRewinding && !isRecording)
         {
             facingForward = false;
             transform.rotation = Quaternion.Euler(0, 180, 0);
@@ -105,16 +107,21 @@ public class PlayerController : MonoBehaviour
 
     public void OnFreeze(InputValue value)
     {
-        freezeFrame.Freeze();
+        if (!isRewinding)
+        {
+            freezeFrame.Freeze();
 
-        if (isRecording && !freezeFrame.isFreeze)
-        {
-            isRewinding = true;
-            isRecording = false;
-        }
-        else
-        {
-            isRecording = true;
+            if (isRecording && !freezeFrame.isFreeze)
+            {
+                isRewinding = true;
+                isRecording = false;
+            }
+            else
+            {
+                isRecording = true;
+            }
+
+            rigidbody.linearVelocity = new Vector3(0, 0, 0);
         }
     }
 }
