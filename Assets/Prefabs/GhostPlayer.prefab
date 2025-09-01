@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3145453055852134972}
   - component: {fileID: 8451880420256914380}
   - component: {fileID: 5288189669518146894}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Eyes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -120,7 +120,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3068503108903581333}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -155,10 +155,10 @@ GameObject:
   - component: {fileID: 5044666265357047046}
   - component: {fileID: 8663451717004049853}
   - component: {fileID: 6672520665366714433}
-  - component: {fileID: 7038364676261919036}
+  - component: {fileID: 8942534041486302724}
   - component: {fileID: 5244243907968951685}
-  m_Layer: 7
-  m_Name: Player
+  m_Layer: 8
+  m_Name: GhostPlayer
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -214,7 +214,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: dbc3ceebfeed25e45ae09ff923664e0a, type: 2}
+  - {fileID: 2100000, guid: e725afc18fec5044db42a18bfcbf5c82, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -287,7 +287,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 120
   m_CollisionDetection: 1
---- !u!114 &7038364676261919036
+--- !u!114 &8942534041486302724
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -296,12 +296,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 4424508052847257285}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e4346fedfb8a094e877f225628fc7e3, type: 3}
+  m_Script: {fileID: 11500000, guid: 3d451cf217aa72a4dae78c57902e08cc, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+  m_EditorClassIdentifier: '::'
   rigidbody: {fileID: 6672520665366714433}
   playerInput: {fileID: 5244243907968951685}
   freezeFrame: {fileID: 0}
+  player: {fileID: 0}
   speed: 10
   jumpForce: 10
   groundCheck: {fileID: 3068503108903581333}

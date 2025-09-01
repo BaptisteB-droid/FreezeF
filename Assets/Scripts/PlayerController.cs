@@ -1,14 +1,19 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private Rigidbody rigidbody;
     [SerializeField] private PlayerInput playerInput;
     [SerializeField] private FreezeFrame freezeFrame;
+    [SerializeField] private GhostController ghost;
 
     private Vector2 moveInput;
     private bool facingForward = true;
+    public bool isRewinding = false;
+    public bool isRecording = false;
 
     [Header("Movement")]
     public float speed;
@@ -38,12 +43,32 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        float targetSpeed = moveInput.x * speed;
-        rigidbody.linearVelocity = new Vector2 (targetSpeed, rigidbody.linearVelocity.y);
-        Vector3 gravity = gravityForce * gravityScale * Vector3.down;
-        rigidbody.AddForce(gravity, ForceMode.Acceleration);
-
+        if (!isRewinding && !isRecording)
+        {
+            float targetSpeed = moveInput.x * speed;
+            rigidbody.linearVelocity = new Vector2 (targetSpeed, rigidbody.linearVelocity.y);
+            Vector3 gravity = gravityForce * gravityScale * Vector3.down;
+            rigidbody.AddForce(gravity, ForceMode.Acceleration);
+        }
+        if (isRewinding && !isRecording)
+        {
+            Rewind();
+        }
     }
+
+    void Rewind()
+    {
+        if (ghost.positions.Count > 0)
+        {
+            transform.position = ghost.positions[0];
+            ghost.positions.RemoveAt(0);
+        }
+        else if(ghost.positions.Count == 0)
+        {
+            isRewinding = false;
+        }
+    }
+
 
     void Flip()
     {
@@ -62,7 +87,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnMove(InputValue value)
     {
-        if (!freezeFrame.isFreeze)
+        if (!freezeFrame.isFreeze && !isRewinding && !isRecording)
         {
             moveInput = value.Get<Vector2>();
             Flip();
@@ -72,7 +97,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnJump(InputValue value)
     {
-        if(value.isPressed && isGrounded && !freezeFrame.isFreeze)
+        if(value.isPressed && isGrounded && !freezeFrame.isFreeze && !isRewinding && !isRecording)
         {
         rigidbody.linearVelocity = new Vector3(rigidbody.linearVelocity.x, jumpForce);
         }
@@ -81,6 +106,15 @@ public class PlayerController : MonoBehaviour
     public void OnFreeze(InputValue value)
     {
         freezeFrame.Freeze();
-    }
 
+        if (isRecording && !freezeFrame.isFreeze)
+        {
+            isRewinding = true;
+            isRecording = false;
+        }
+        else
+        {
+            isRecording = true;
+        }
+    }
 }

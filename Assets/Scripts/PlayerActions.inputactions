@@ -30,7 +30,7 @@
                     "id": "7404f385-4397-4799-8377-278090df4bd8",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Press",
                     "initialStateCheck": false
                 }
             ],
@@ -104,7 +104,7 @@
                 {
                     "name": "",
                     "id": "e286cb8e-a887-418d-9656-61c7d0dbb0cb",
-                    "path": "<Keyboard>/f",
+                    "path": "<Keyboard>/t",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
