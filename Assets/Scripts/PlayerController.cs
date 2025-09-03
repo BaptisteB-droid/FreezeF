@@ -29,13 +29,6 @@ public class PlayerController : MonoBehaviour
     public float gravityScale;
     public float gravityForce;
 
-
-    private void Update()
-    {
-        checkGrounded();
-    }
-
-
     public void checkGrounded()
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, groundCheckRadius, groundLayer);
@@ -49,6 +42,8 @@ public class PlayerController : MonoBehaviour
             rigidbody.linearVelocity = new Vector2 (targetSpeed, rigidbody.linearVelocity.y);
             Vector3 gravity = gravityForce * gravityScale * Vector3.down;
             rigidbody.AddForce(gravity, ForceMode.Acceleration);
+
+            checkGrounded();
         }
         if (isRewinding && !isRecording)
         {
@@ -65,9 +60,10 @@ public class PlayerController : MonoBehaviour
         }
         else if(ghost.positions.Count == 0)
         {
-            isRewinding = false;
             rigidbody.linearVelocity = new Vector3(0, 0, 0);
             transform.position = ghost.transform.position;
+            Time.timeScale = 1f;
+            isRewinding = false;
         }
     }
 
@@ -115,6 +111,7 @@ public class PlayerController : MonoBehaviour
             {
                 isRewinding = true;
                 isRecording = false;
+                Time.timeScale = 1.5f;
             }
             else
             {

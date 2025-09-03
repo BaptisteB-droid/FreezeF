@@ -50,12 +50,15 @@ public class GhostController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        float targetSpeed = moveInput.x * speed;
-        rigidbody.linearVelocity = new Vector2(targetSpeed, rigidbody.linearVelocity.y);
-        Vector3 gravity = gravityForce * gravityScale * Vector3.down;
-        rigidbody.AddForce(gravity, ForceMode.Acceleration);
+        if(!player.isRewinding)
+        {
+            float targetSpeed = moveInput.x * speed;
+            rigidbody.linearVelocity = new Vector2(targetSpeed, rigidbody.linearVelocity.y);
+            Vector3 gravity = gravityForce * gravityScale * Vector3.down;
+            rigidbody.AddForce(gravity, ForceMode.Acceleration);
 
-        checkGrounded();
+            checkGrounded();
+        }
 
         if (player.isRecording)
         {
@@ -81,8 +84,12 @@ public class GhostController : MonoBehaviour
 
     public void OnMove(InputValue value)
     {
+        if (!player.isRewinding)
+        {
             moveInput = value.Get<Vector2>();
             Flip();
+        }
+
     }
 
     public void OnJump(InputValue value)
